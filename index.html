@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Character Counter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 520px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      resize: none;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+      font-size: 16px;
+      outline: none;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    textarea:focus {
+      border-color: #00c6ff;
+      box-shadow: 0 0 8px rgba(0, 198, 255, 0.6);
+    }
+
+    .counter {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #dcdcdc;
+      font-size: 14px;
+    }
+
+    .warning {
+      color: #ffb347;
+    }
+
+    .danger {
+      color: #ff4d4d;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <textarea
+      id="textInput"
+      maxlength="150"
+      placeholder="Start typing your message..."
+    ></textarea>
+
+    <div class="counter">
+      <span id="statusText">Characters used</span>
+      <span id="charCount">0 / 150</span>
+    </div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById("textInput");
+    const charCount = document.getElementById("charCount");
+    const statusText = document.getElementById("statusText");
+
+    const maxChars = 150;
+
+    textarea.addEventListener("input", () => {
+      const currentLength = textarea.value.length;
+
+      charCount.textContent = `${currentLength} / ${maxChars}`;
+
+      if (currentLength > 120) {
+        charCount.className = "danger";
+        statusText.textContent = "Limit almost reached";
+      } else if (currentLength > 90) {
+        charCount.className = "warning";
+        statusText.textContent = "Approaching limit";
+      } else {
+        charCount.className = "";
+        statusText.textContent = "Characters used";
+      }
+    });
+  </script>
+</body>
+</html>
